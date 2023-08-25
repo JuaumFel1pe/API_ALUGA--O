@@ -43,10 +43,28 @@ server.put('/cliente/:id', async (req, resp) =>{
         const add = req.body
         const addID = req.params.id
         const data = await alterarCliente(add, addID)
-        resp.send(data)
+        if(data != 1)
+            throw new Error('O contato não pode ser alterado')
+        else
+        resp.status(204).send
     } catch (err) {
         resp.status(500).send({
             erro: err.message
+        })
+    }
+})
+
+server.delete('/cliente/:id', async (req, resp) =>{
+    try {
+        const addID = req.params.id
+        const data = await deleteCliente(addID)
+        if(data != 1)
+            throw new Error('O contato não pode ser apagado')
+        else
+        resp.status(204).send
+    } catch (err) {
+        resp.status(500).send({
+            erro:err.message
         })
     }
 })
