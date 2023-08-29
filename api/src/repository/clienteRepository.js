@@ -3,11 +3,11 @@ import { config } from "./connection.js";
 export async function todosCLientes(){
     const sql = `SELECT 	
     ID_CLIENTE AS ID,
-    NM_CLIENTE AS Nome,
-    DS_EMAIL AS Email,
-    DS_TELEFONE as Telefone,
-    DS_CPF	as CPF,
-    DS_CNH	as CNH FROM TB_CLIENTE;`
+    NM_CLIENTE AS nome,
+    DS_EMAIL AS email,
+    DS_TELEFONE as telefone,
+    DS_CPF	as cpf,
+    DS_CNH	as cnh FROM TB_CLIENTE;`
 
     const [resp] = await config.query(sql)
     return resp;
@@ -24,11 +24,11 @@ export async function inserirCliente (cliente){
 export async function pesquisaNome(nome){
     const sql = `SELECT 	
     ID_CLIENTE AS ID,
-    NM_CLIENTE AS Nome,
-    DS_EMAIL AS Email,
-    DS_TELEFONE as Telefone,
-    DS_CPF	as CPF,
-    DS_CNH	as CNH
+    NM_CLIENTE AS nome,
+    DS_EMAIL AS email,
+    DS_TELEFONE as eelefone,
+    DS_CPF	as cpf,
+    DS_CNH	as cnh
     FROM TB_CLIENTE
     WHERE NM_CLIENTE LIKE ?;`
 
@@ -55,5 +55,19 @@ export async function deleteCliente(id){
 
     const [resp] = await config.query(sql, [id])
     return resp.affectedRows;
+}
+
+export async function cpfSearch(busca){
+    const sql = `SELECT 	
+    ID_CLIENTE AS ID,
+    NM_CLIENTE AS nome,
+    DS_EMAIL AS email,
+    DS_TELEFONE as eelefone,
+    DS_CPF	as cpf,
+    DS_CNH	as cnh
+    FROM TB_CLIENTE
+    WHERE DS_CPF LIKE ?;`
+    const [resp] = await config.query(sql, [`%${busca}%`])
+    return resp;
 }
 
